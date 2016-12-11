@@ -1,60 +1,70 @@
-#include <stdio.h>>
+#include <stdio.h>
+#define ABSOLUTE_ZERO 273.15
+#define KELVIN 'K'
+#define CELSIUS 'C'
+#define FAHRENHEIT 'F'
 
-int main(void)
+float toCel(char from, float value)
 {
-	char inputType;
-	double inputValue;
-	double celsiumValue;
-	double fahrenheitValue;
-	double kelvinValue;
+    if (from == KELVIN)
+        return value - ABSOLUTE_ZERO;
+    if (from == FAHRENHEIT)
+        return (value - 32) / 1.8;
+    return 0;
+}
 
-	printf("Write type of temperature\n");
-	printf("C - celsium\n");
-	printf("F - fahrenheit\n");
-	printf("K - kelvin\n");
+float toKel(char from, float value)
+{
+    if (from == CELSIUS)
+        return value + ABSOLUTE_ZERO;
+    if (from == FAHRENHEIT)
+        return toKel(CELSIUS, toCel(FAHRENHEIT, value));
+    return 0;
+}
 
-	scanf("%s", &inputType);
+float toFar(char from, float value)
+{
+    if (from == CELSIUS)
+        return (value * 1.8) + 32;
+    if (from == KELVIN)
+        return toFar(CELSIUS, toCel(KELVIN, value));
+    return 0;
+}
 
-	switch (inputType)
-	{
-	case 67:
-		printf("Write celsium value\n");
-
-		scanf("%.2lf", celsiumValue);
-		farengateValue = 1.8 * celsiumValue + 32;
-		kelvinValue = celsiumValue + 273;
-
-		printf("Farengate value - %.2lf\n", fahrenheitValue);
-		printf("Kelvin value - %.2lf\n", kelvinValue);
-		break;
-
-	case 70:
-		printf("Write fahrenheit value\n");
-
-		scanf("%.2lf", fahrenheitValue);
-		celsiumValue = (fahrenheitValue - 32) / 1.8;
-		kelvinValue = celsiumValue + 273;
-
-		printf("Celsium value - %.2lf\n", celsiumValue);
-		printf("Kelvin value - %.2lf\n", kelvinValue);
-		break;
-
-	case 75:
-		printf("Write kelvin value\n");
-
-		scanf("%.2lf", kelvinValue);
-		celsiumValue = kelvinValue - 273;
-		fahrenheitValue = 1.8 * celsiumValue + 32;
-
-		printf("Celsium value - %.2lf\n", celsiumValue);
-		printf("Farengate value - %.2lf\n", fahrenheitValue);
-		break;
-
-	default:
-		printf("Write correct type!\n");
-		break;
-	}
-
-
-	return 0;
+int main(int argc, const char * argv[]) {
+    char scale;
+    float value;
+    printf("Input Conversion Values\n");
+    printf("C - Celsius\n");
+    printf("F - Fahrenheit\n");
+    printf("K - Kelvin\n");
+    scale = getchar();
+    printf("Input Temp Value\n");
+    scanf("%f", &value);
+    switch (scale) {
+        case KELVIN:
+        {
+            printf("Celsius degrease: %f\n", toCel(KELVIN, value));
+            printf("Fahrenheit degrease: %f\n", toFar(KELVIN, value));
+            break;
+        }
+        case CELSIUS:
+        {
+            printf("Kelvin degrease: %f\n", toKel(CELSIUS, value));
+            printf("Fahrenheit degrease: %f\n", toFar(CELSIUS, value));
+            break;
+        }
+        case FAHRENHEIT:
+        {
+            printf("Celsius degrease : %f\n", toCel(FAHRENHEIT, value));
+            printf("Kelvin degrease: %f\n", toKel(FAHRENHEIT, value));
+            break;
+        }
+        default:
+        {
+            printf("Error.Try again\n");
+            break;
+        }
+    }
+    return 0;
 }
