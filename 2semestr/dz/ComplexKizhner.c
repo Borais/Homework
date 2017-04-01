@@ -42,8 +42,8 @@ void printcomp(complex_t a){
 int main()
 {
     complex_t x;
-    x.Re = 10;
-    x.Im = 12;
+    x.Re = 14;
+    x.Im = 10;
     printcomp(x);
     return 0;
 }
