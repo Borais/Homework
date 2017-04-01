@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+
+
 typedef struct{
     float Re;
     float Im;
@@ -31,6 +33,7 @@ complex_t* divide(complex_t* a, complex_t* b){
     t = (complex_t*)malloc(sizeof(complex_t));
     t->Re = (a->Re * b->Re + a->Im * b->Im)/((b->Re * b->Re)+(b->Im * b->Im));
     t->Im = (b->Re * a->Im - a->Re * b->Im)/((b->Re * b->Re)+(b->Im * b->Im));
+    return t;
 }
 void printcomp(complex_t a){
     if (a.Im<0)
